@@ -1,0 +1,8 @@
+{
+    "cSpell.words": [
+        "cssnext"
+    ],
+    "files.associations": {
+      "*.css": "postcss"
+    }
+}

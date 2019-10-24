@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div id="editor"></div>
+  <div style="float: right;">123</div>
+  <script src="dist/index.js"></script>
+  <script>
+    const editorEle = document.getElementById('editor');
+    const editor = new HEditor(editorEle);
+    editor.listen('image', function (e) {
+      console.log(e);
+    });
+    editor.listen('contentChange', function (e) {
+      console.log(e);
+    });
+    // editor.listen('send', function (e) {
+    //   console.log(e);
+    // });
+    // editor.listen('image').then(data => {
+    //   console.log(data);
+    // });
+    console.log(editor);
+  </script>
+</body>
+
+</html>

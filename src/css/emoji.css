@@ -1,0 +1,27 @@
+#h-editor-emoji {
+  background: #f7f3f3;
+  border-radius: 5px;
+  line-height: 30px;
+  position: absolute;
+  user-select: none;
+  td {
+    text-align: center;
+    width: 30px;
+    &:hover {
+      background: #ccc;
+      cursor: pointer;
+    }
+  }
+  &::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    position: absolute;
+    transform: rotate(45deg);
+    z-index: -1;
+    left: 20px;
+    bottom: -10px;
+  }
+}
