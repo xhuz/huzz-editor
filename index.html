@@ -13,7 +13,7 @@
 
 <body>
   <div id="editor"></div>
-  <div style="float: right;">123</div>
+  <div style="float: right;" id="box">123</div>
   <script src="dist/index.js"></script>
   <script>
     const editorEle = document.getElementById('editor');
@@ -24,9 +24,17 @@
     editor.listen('contentChange', function (e) {
       console.log(e);
     });
-    // editor.listen('send', function (e) {
+    editor.listen('send', function (e) {
+      console.log(e);
+    });
+
+    // document.getElementsByClassName('h-editor')[0].addEventListener('click', function (e) {
     //   console.log(e);
-    // });
+    // }, false);
+    document.getElementById('box').addEventListener('click', function (e) {
+      document.getElementsByClassName('h-editor-body')[0].focus();
+
+    })
     // editor.listen('image').then(data => {
     //   console.log(data);
     // });

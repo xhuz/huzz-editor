@@ -4,27 +4,29 @@
 
   .h-editor-toolbar {
     border-top: 1px solid #ccc;
+    position: relative;
+
+    > div {
+      float: left;
+      padding: 0 5px;
+      cursor: pointer;
+
+      &:hover {
+        background: #ccc;
+      }
+
+      img {
+        width: 21px;
+        vertical-align: top;
+      }
+    }
+
+    .h-editor-send {
+      float: right;
+      vertical-align: middle;
+    }
   }
 
-  .h-editor-toolbar > div {
-    float: left;
-    padding: 0 5px;
-    cursor: pointer;
-  }
-
-  .h-editor-toolbar > div img {
-    width: 21px;
-    vertical-align: top;
-  }
-
-  .h-editor-toolbar > div:hover {
-    background: #ccc;
-  }
-
-  .h-editor-toolbar > div:last-child {
-    float: right;
-    vertical-align: middle;
-  }
 }
 
 .clear-fix::after {

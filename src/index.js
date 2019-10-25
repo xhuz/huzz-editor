@@ -23,6 +23,7 @@ export default class HEditor {
     };
     this.body = {
       element: null,
+      focusToLast: false,
       draft: '',
       format: ''
     };
@@ -39,7 +40,7 @@ export default class HEditor {
     const editorEle = document.createElement('div');
     const content = `
       <div class="h-editor-body" contenteditable></div>
-      <div class="h-editor-toolbar clear-fix" style="border-top: 1px solid #ccc;">
+      <div class="h-editor-toolbar clear-fix">
         <div class="h-editor-emoji"><img src="./src/images/smile.png" alt=""></div>
         <div class="h-editor-image"><img src="./src/images/image.png" alt=""></div>
         <div class="h-editor-file"><img src="./src/images/folder-open.png" alt=""></div>
@@ -73,6 +74,11 @@ export default class HEditor {
     const body = this.body;
     emoji.element.addEventListener('click', e => {
       e.stopPropagation();
+      if (this.body.focusToLast) {
+        this.focusToLast();
+      } else {
+        this.focus();
+      }
       if (this.emoji.isShow) {
         this.emoji.hide();
       } else {
@@ -144,14 +150,22 @@ export default class HEditor {
       pasteDate = pasteDate.replace(/ /g, '&nbsp;');
       Utils.insertAtCursor(body.element, pasteDate, false);
     }, false);
-
+    body.element.addEventListener('click', e => {
+      this.body.focusToLast = false;
+    }, false);
     document.body.addEventListener('click', (e) => {
       let target = e.target;
       const isChild = this.emoji.element.contains(target);
       if (!isChild && this.emoji.isShow) {
         this.emoji.hide();
+        this.body.focusToLast = true;
       }
+      console.log(this.body);
     }, false);
+
+    this.emoji.selected(e => {
+      Utils.insertAtCursor(this.body.element, e, false);
+    });
   }
 
   _createUpload(id) {
@@ -207,6 +221,19 @@ export default class HEditor {
       }
       default:
         throw new Error('event is not valid');
+    }
+  }
+
+  focus() {
+    this.body.element.focus();
+  }
+
+  focusToLast() {
+    const element = this.body.element;
+    if (window.getSelection) {
+      const range = window.getSelection();
+      range.selectAllChildren(element);
+      range.collapse(element, element.childNodes.length);
     }
   }
 

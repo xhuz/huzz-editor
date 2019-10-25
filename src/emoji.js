@@ -1,4 +1,5 @@
 import './css/emoji.css';
+import {Utils} from './utils';
 
 export class Emoji {
   constructor() {
@@ -30,7 +31,17 @@ export class Emoji {
       html += tr;
     }
     container.innerHTML = html;
-    container.id = 'h-editor-emoji';
+    container.className = 'h-editor-emoji-panel';
+  }
+
+  selected(callback) {
+    const td = this.element.querySelectorAll('td');
+    td.forEach(ele => {
+      ele.addEventListener('click', e => {
+        callback(e.target.innerHTML);
+        this.hide();
+      });
+    });
   }
 
   show(filed, position) {
@@ -38,9 +49,12 @@ export class Emoji {
     this.isShow = true;
     filed.append(this.element);
     if (position.y > winH / 2) {
-
+      this.element.style.top = 'auto';
+      this.element.style.bottom = '50px';
+      this.element.classList.add('h-editor-emoji-panel-arrow-bottom');
     } else {
-      this.element.style.top = '20px';
+      this.element.style.top = '50px';
+      this.element.classList.add('h-editor-emoji-panel-arrow-top');
     }
 
   }

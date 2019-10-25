@@ -7,7 +7,8 @@ export default {
   output: {
     file: 'dist/index.js',
     format: 'umd',
-    name: 'HEditor'
+    name: 'HEditor',
+    sourcemap: true
   },
   plugins: [
     postcss({
