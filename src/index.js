@@ -2,6 +2,10 @@ import './css/index.css';
 import {Utils, Observer, EventEmitter} from './utils';
 import {Emoji} from './emoji';
 import {PreviewImage} from './preview-image';
+import folderIcon from './images/folder-open.png';
+import imageIcon from './images/image.png';
+import smileIcon from './images/smile.png';
+
 
 export default class HEditor {
   constructor(element, options) {
@@ -44,9 +48,9 @@ export default class HEditor {
     const content = `
       <div class="h-editor-body" contenteditable></div>
       <div class="h-editor-toolbar clear-fix">
-        <div class="h-editor-emoji"><img src="./src/images/smile.png" alt=""></div>
-        <div class="h-editor-image"><img src="./src/images/image.png" alt=""></div>
-        <div class="h-editor-file"><img src="./src/images/folder-open.png" alt=""></div>
+        <div class="h-editor-emoji"><img src="${folderIcon}" alt=""></div>
+        <div class="h-editor-image"><img src="${imageIcon}" alt=""></div>
+        <div class="h-editor-file"><img src="${smileIcon}" alt=""></div>
         <div class="h-editor-send">发送</div>
       </div>`;
     editorEle.className = 'h-editor';

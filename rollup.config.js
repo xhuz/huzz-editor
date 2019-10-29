@@ -2,6 +2,8 @@ import postcss from 'rollup-plugin-postcss';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
 
+import image from 'rollup-plugin-img';
+
 export default {
   input: 'src/index.js',
   output: {
@@ -11,6 +13,7 @@ export default {
     sourcemap: true
   },
   plugins: [
+    image(),
     postcss({
       extensions: ['.css'],
       plugins: [
