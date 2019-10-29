@@ -1,6 +1,7 @@
 import './css/index.css';
-import {Utils} from './utils';
+import {Utils, Observer, EventEmitter} from './utils';
 import {Emoji} from './emoji';
+import {PreviewImage} from './preview-image';
 
 export default class HEditor {
   constructor(element, options) {
@@ -28,6 +29,8 @@ export default class HEditor {
       format: ''
     };
     this.emoji = Emoji.getInstance();
+    this.preview = PreviewImage.getInstance();
+    this.pasteImage = null;
     this._init();
     this._bindEvents();
   }
@@ -143,6 +146,21 @@ export default class HEditor {
       e.preventDefault();
       const clipboardData = e.clipboardData;
       const {items, files} = clipboardData;
+      let item = null;
+      if (files && files.length) {
+        this.pasteImage = files[0];
+        this.preview.show(this.element, files[0]);
+      } else if (items) {
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].kind === 'file' && items[i].type.match(/^image\//i)) {
+            this.pasteImage = item = items[i];
+            break;
+          }
+        }
+      }
+      if (item) {
+        this.preview.show(this.element, item);
+      }
       let pasteDate = clipboardData.getData("Text");
       pasteDate = pasteDate.replace(/</g, '&lt;');
       pasteDate = pasteDate.replace(/>/g, '&gt;');
@@ -151,21 +169,26 @@ export default class HEditor {
       Utils.insertAtCursor(body.element, pasteDate, false);
     }, false);
     body.element.addEventListener('click', e => {
+      e.stopPropagation();
       this.body.focusToLast = false;
     }, false);
-    document.body.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
       let target = e.target;
       const isChild = this.emoji.element.contains(target);
-      if (!isChild && this.emoji.isShow) {
-        this.emoji.hide();
+      if (!isChild) {
         this.body.focusToLast = true;
+        if (this.emoji.isShow) {
+          this.emoji.hide();
+        }
       }
-      console.log(this.body);
     }, false);
 
     this.emoji.selected(e => {
       Utils.insertAtCursor(this.body.element, e, false);
     });
+
+    this.preview.events.emit('close');
+    this.preview.events.emit('confirm');
   }
 
   _createUpload(id) {
@@ -183,10 +206,10 @@ export default class HEditor {
 
   _listenUploadEvent(inputElement, callback) {
     inputElement.addEventListener('change', () => {
-      const files = inputElement.files.length > 0 ? inputElement.files : null;
+      const files = inputElement.files.length > 0 ? inputElement.files : [];
       const f = [...files];
       inputElement.value = null;
-      callback(f);
+      callback(f[0]);
     }, false);
   }
 
@@ -219,6 +242,13 @@ export default class HEditor {
         });
         break;
       }
+      case 'pasteImage': {
+        const observer = new Observer(this.preview.events);
+        observer.subscribe('pasteImage', () => {
+          callback(this.pasteImage);
+        });
+        break;
+      }
       default:
         throw new Error('event is not valid');
     }
@@ -244,6 +274,7 @@ export default class HEditor {
   clearContent() {
     this.body.format = '';
     this.body.draft = '';
+    this.body.element.innerHTML = '';
   }
 
 }

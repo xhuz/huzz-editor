@@ -1,0 +1,82 @@
+.h-editor-preview-panel {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background: #f7f3f3;
+  border-radius: 5px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-shadow: 0 0 5px gray;
+
+  /* &::before {
+    cursor: pointer;
+    content: 'x';
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    background: #b9b1b1;
+    position: absolute;
+    right: -7px;
+    top: -7px;
+    color: #f5f5f5;
+  } */
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - 10px));
+  }
+
+  .h-editor-preview-image {
+    width: 80%;
+    height: auto;
+  }
+
+  .h-editor-preview-image-horizontal {
+    width: auto;
+    height: 70%;
+  }
+
+  .h-editor-preview-buttons {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+
+    button {
+      cursor: pointer;
+      width: 80px;
+      height: 30px;
+      background: none;
+      border: none;
+      color: white;
+      outline: none;
+      border-radius: 5px;
+
+      &.h-editor-preview-close {
+        background: #b9b1b1;
+        margin-right: 10px;
+
+        &:hover {
+          background: #888484;
+        }
+      }
+
+      &.h-editor-preview-save {
+        background: #00bcd4;
+
+        &:hover {
+          background: #02aabf;
+        }
+      }
+    }
+  }
+}

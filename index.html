@@ -38,7 +38,12 @@
     // editor.listen('image').then(data => {
     //   console.log(data);
     // });
+
+    editor.listen('pasteImage', function (e) {
+      console.log(e);
+    });
     console.log(editor);
+
   </script>
 </body>
 
