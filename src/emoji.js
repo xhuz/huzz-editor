@@ -1,5 +1,4 @@
 import './css/emoji.css';
-import {Utils} from './utils';
 
 export class Emoji {
   constructor() {
@@ -47,7 +46,7 @@ export class Emoji {
   show(filed, position) {
     const winH = window.innerHeight;
     this.isShow = true;
-    filed.append(this.element);
+    filed.appendChild(this.element);
     if (position.y > winH / 2) {
       this.element.style.top = 'auto';
       this.element.style.bottom = '50px';

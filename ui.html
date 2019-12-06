@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    :root {
+      --background-color: #f8f8f8;
+      --background-button-color-hover: #efefef;
+      --background-button-color-active: #e2e2e2;
+      --border-color: #616061;
+      --color: #5e5e5e;
+      --border-radius: 5px;
+    }
+    .wrapper {
+      color: var(--color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      min-height: 34px;
+    }
+
+    .editor-body {
+      flex: 1;
+      border-left: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      padding: 7px 10px;
+    }
+
+    .editor-body > div {
+      outline: none;
+    }
+
+    .btn {
+      padding: 0 8px;
+      /* background: var(--background-color); */
+      z-index: -1;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: var(--background-button-color-hover);
+    }
+
+    .editor-tools, .send {
+      height: 35px;
+    }
+
+    .editor-tools .btn:first-child {
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+    }
+
+    .send {
+      line-height: 35px;
+    }
+
+    .send .btn {
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+
+    .tool {
+      float: left;
+      padding-top: 5px;
+      box-sizing: content-box;
+      height: calc(100% - 5px);
+    }
+
+
+
+
+  </style>
+</head>
+
+<body>
+  <div id="editor">
+    <div class="wrapper">
+      <div class="editor-tools">
+        <div class="btn tool"><img src="./src/images/smile.png" alt="" style="width: 24px;"></div>
+        <div class="btn tool"><img src="./src/images/folder-open.png" alt="" style="width: 24px;"></div>
+        <div class="btn tool"><img src="./src/images/image.png" alt="" style="width: 24px;"></div>
+      </div>
+      <div class="editor-body">
+        <div contenteditable></div>
+      </div>
+      <div class="send"><div class="btn">发送</div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

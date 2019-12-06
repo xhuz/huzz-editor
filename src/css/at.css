@@ -1,0 +1,40 @@
+.h-editor-at {
+  width: 155px;
+  height: 155px;
+  background: #f7f3f3;
+  border-radius: 5px;
+  box-sizing: border-box;
+  overflow: auto;
+  position: absolute;
+
+  .h-editor-at-item {
+    padding: 3px 5px;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+
+    > div {
+      float: left;
+    }
+
+    .h-editor-at-avatar {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+      }
+    }
+
+    &:hover {
+      background: #00bcd4;
+    }
+  }
+
+  .h-editor-at-item-active {
+    background: #00bcd4;
+  }
+}

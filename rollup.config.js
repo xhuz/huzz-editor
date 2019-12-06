@@ -1,6 +1,8 @@
 import postcss from 'rollup-plugin-postcss';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
+import commonjs from 'rollup-plugin-commonjs'
+import resolve from 'rollup-plugin-node-resolve'
 
 import image from 'rollup-plugin-img';
 
@@ -20,7 +22,9 @@ export default {
         nested(),
         cssnext()
       ]
-    })
+    }),
+    resolve(),
+    commonjs()
   ],
   watch: {
     include: 'src/**/*'

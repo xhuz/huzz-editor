@@ -33,14 +33,14 @@ export class PreviewImage {
     image.className = 'h-editor-preview-image';
     close.className = 'h-editor-preview-close';
     save.className = 'h-editor-preview-save';
-    buttons.className = 'h-editor-preview-buttons'
+    buttons.className = 'h-editor-preview-buttons';
     close.innerHTML = '关闭';
     save.innerHTML = '上传';
     image.src = '';
-    buttons.append(close);
-    buttons.append(save);
-    preview.append(image);
-    preview.append(buttons);
+    buttons.appendChild(close);
+    buttons.appendChild(save);
+    preview.appendChild(image);
+    preview.appendChild(buttons);
 
 
   }
@@ -68,7 +68,7 @@ export class PreviewImage {
   }
 
   show(element, file) {
-    element.append(this.element);
+    element.appendChild(this.element);
     Utils.previewImage(this.image, file);
   }
 

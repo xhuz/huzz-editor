@@ -1,10 +1,11 @@
 import './css/index.css';
-import {Utils, Observer, EventEmitter} from './utils';
+import {Utils, Observer} from './utils';
 import {Emoji} from './emoji';
 import {PreviewImage} from './preview-image';
 import folderIcon from './images/folder-open.png';
 import imageIcon from './images/image.png';
 import smileIcon from './images/smile.png';
+import {At} from './at';
 
 
 export default class HEditor {
@@ -35,6 +36,7 @@ export default class HEditor {
     this.emoji = Emoji.getInstance();
     this.preview = PreviewImage.getInstance();
     this.pasteImage = null;
+    this.at = new At();
     this._init();
     this._bindEvents();
   }
@@ -48,9 +50,9 @@ export default class HEditor {
     const content = `
       <div class="h-editor-body" contenteditable></div>
       <div class="h-editor-toolbar clear-fix">
-        <div class="h-editor-emoji"><img src="${folderIcon}" alt=""></div>
+        <div class="h-editor-emoji"><img src="${smileIcon}" alt=""></div>
         <div class="h-editor-image"><img src="${imageIcon}" alt=""></div>
-        <div class="h-editor-file"><img src="${smileIcon}" alt=""></div>
+        <div class="h-editor-file"><img src="${folderIcon}" alt=""></div>
         <div class="h-editor-send">发送</div>
       </div>`;
     editorEle.className = 'h-editor';
@@ -63,8 +65,8 @@ export default class HEditor {
     !emoji && toolbar.removeChild(emojiEle);
     !image && toolbar.removeChild(imageEle);
     !file && toolbar.removeChild(fileEle);
-    imageEle.append(imageUpload);
-    fileEle.append(fileUpload);
+    imageEle.appendChild(imageUpload);
+    fileEle.appendChild(fileUpload);
     this.toolbar.element = toolbar;
     this.toolbar.emoji.element = emojiEle;
     this.toolbar.image.element = imageEle;
@@ -73,7 +75,7 @@ export default class HEditor {
     this.toolbar.file.upload = fileUpload;
     this.toolbar.send.element = sendBtnEle;
     this.body.element = body;
-    this.element.append(editorEle);
+    this.element.appendChild(editorEle);
   }
 
   _bindEvents() {
@@ -108,7 +110,7 @@ export default class HEditor {
     }, false);
     body.element.addEventListener('input', e => {
       if (e.data === '@') {
-        console.log(e);
+        this.at.show(this.element);
       }
       this.body.draft = this.body.element.innerHTML;
       let draft = this.body.draft;
@@ -178,13 +180,20 @@ export default class HEditor {
     }, false);
     document.addEventListener('click', (e) => {
       let target = e.target;
-      const isChild = this.emoji.element.contains(target);
-      if (!isChild) {
-        this.body.focusToLast = true;
-        if (this.emoji.isShow) {
-          this.emoji.hide();
-        }
-      }
+      // const isChild = this.emoji.element.contains(target);
+      // if (!isChild) {
+      //   this.body.focusToLast = true;
+      //   if (this.emoji.isShow) {
+      //     this.emoji.hide();
+      //   }
+      // }
+
+      // if (this.at.isShow) {
+      //   console.log(1);
+      //   this.at.events.emit('close');
+      // }
+      this._hideModule(this.emoji, target);
+      this._hideModule(this.at, target);
     }, false);
 
     this.emoji.selected(e => {
@@ -195,6 +204,19 @@ export default class HEditor {
     this.preview.events.emit('confirm');
   }
 
+  _hideModule(element, target) {
+    console.log(element)
+    // const isChild = element.contains(target);
+    // console.log(isChild);
+    // if (!isChild) {
+    //   this.body.focusToLast = true;
+    //   if (element.isShow) {
+    //     console.log(element);
+    //     element.hide();
+    //   }
+    // }
+  }
+
   _createUpload(id) {
     const element = document.createElement('div');
     const label = document.createElement('label');
@@ -203,8 +225,8 @@ export default class HEditor {
     label.setAttribute('for', `${id}-${HEditor.id}`);
     input.id = `${id}-${HEditor.id}`;
     input.type = 'file';
-    element.append(label);
-    element.append(input);
+    element.appendChild(label);
+    element.appendChild(input);
     return element;
   }
 
